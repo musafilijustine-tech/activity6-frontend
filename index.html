@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ICT251 Activity 6 — Campus Maintenance Requests frontend">
+  <title>Campus Maintenance Requests</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ================= HEADER + NAVIGATION ================= -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">MU</span>
+        <div>
+          <p class="brand-title">Campus Maintenance</p>
+          <p class="brand-subtitle">Mulungushi University &middot; ICT251</p>
+        </div>
+      </div>
+
+      <nav class="site-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#manage">Manage Records</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="container">
+
+    <!-- ================= HOME ================= -->
+    <section id="home" class="panel hero" aria-labelledby="home-title">
+      <h1 id="home-title">Campus Maintenance Requests</h1>
+      <p class="lead">
+        Report broken lights, leaking taps or damaged furniture on campus.
+        Use this page to add a request, track its progress and keep a record
+        of every repair job in one place.
+      </p>
+      <p class="hero-hint">
+        Start by adding a request in the <a href="#manage">Manage Records</a> section.
+      </p>
+    </section>
+
+    <!-- ================= MANAGE RECORDS ================= -->
+    <section id="manage" class="panel" aria-labelledby="manage-title">
+      <h2 id="manage-title">Manage Records</h2>
+
+      <!-- Status message area -->
+      <div id="message" class="message" role="status" aria-live="polite"></div>
+
+      <!-- ---------- Add / Edit form ---------- -->
+      <form id="record-form" class="record-form" novalidate>
+        <h3 id="form-title">Add a new request</h3>
+
+        <div class="field">
+          <label for="title">Title <span class="hint">(3–80 characters)</span></label>
+          <input id="title" name="title" type="text" maxlength="80" autocomplete="off" required>
+        </div>
+
+        <div class="field">
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="">Select a category</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Plumbing">Plumbing</option>
+            <option value="Furniture">Furniture</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="description">Description <span class="hint">(5–300 characters)</span></label>
+          <textarea id="description" name="description" rows="3" maxlength="300" required></textarea>
+        </div>
+
+        <div class="field">
+          <label for="status">Status</label>
+          <select id="status" name="status" required>
+            <option value="Pending">Pending</option>
+            <option value="In progress">In progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" id="submit-btn" class="btn btn-primary">Add record</button>
+          <button type="button" id="cancel-edit-btn" class="btn btn-ghost" hidden>Cancel edit</button>
+        </div>
+      </form>
+
+      <!-- ---------- Search + filter + count ---------- -->
+      <div class="toolbar">
+        <div class="field">
+          <label for="search">Search by title</label>
+          <input id="search" type="search" placeholder="e.g. light" autocomplete="off">
+        </div>
+
+        <div class="field">
+          <label for="filter-status">Filter by status</label>
+          <select id="filter-status">
+            <option value="">All statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="In progress">In progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+
+        <p class="count" id="record-count" aria-live="polite"></p>
+      </div>
+
+      <!-- ---------- Records table ---------- -->
+      <div class="table-wrap">
+        <table class="records-table">
+          <caption class="visually-hidden">Maintenance requests</caption>
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Title</th>
+              <th scope="col">Category</th>
+              <th scope="col">Status</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="records-body"></tbody>
+        </table>
+        <p id="empty-state" class="empty-state" hidden>No records match your search.</p>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section id="about" class="panel" aria-labelledby="about-title">
+      <h2 id="about-title">About this project</h2>
+
+      <dl class="about-list">
+        <dt>Project name</dt>
+        <dd>Campus Maintenance Requests</dd>
+        <dt>Student name</dt>
+        <dd>Musafili Justine</dd>
+        <dt>Student number</dt>
+        <dd>202508384</dd>
+        <dt>Activity</dt>
+        <dd>ICT251 Activity 6 &mdash; Frontend Development</dd>
+      </dl>
+
+      <p class="notice">
+        This version uses <strong>browser demonstration data</strong> stored
+        in your own browser with <code>localStorage</code>. Records do not
+        leave this device and will not appear for other users until the
+        backend is added in Activity 7/8.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Mulungushi University &middot; ICT251 Frontend Development</p>
+    </div>
+  </footer>
+
+  <!-- ---------- View dialog ---------- -->
+  <dialog id="view-dialog" class="dialog" aria-labelledby="view-title">
+    <h3 id="view-title">Request details</h3>
+    <dl id="view-content" class="view-list"></dl>
+    <form method="dialog" class="dialog-actions">
+      <button class="btn btn-primary">Close</button>
+    </form>
+  </dialog>
+
+  <!-- ---------- Delete confirmation dialog ---------- -->
+  <dialog id="delete-dialog" class="dialog" aria-labelledby="delete-title">
+    <h3 id="delete-title">Delete this record?</h3>
+    <p id="delete-text">This action cannot be undone.</p>
+    <form method="dialog" class="dialog-actions">
+      <button value="cancel" class="btn btn-ghost">Cancel</button>
+      <button value="confirm" class="btn btn-danger">Delete</button>
+    </form>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
